@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'ui/dashboard.dart' as dashboard;
 import 'ui/insert.dart';
+import 'ui/produk_page.dart';
 import 'ui/update.dart';
 import 'ui/login.dart';
 
@@ -70,6 +71,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AddPage()),
                     );
                   },
+                  color: Colors.red,
                 ),
                 // Update button
                 HomeButton(
@@ -81,6 +83,19 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => UpdatePage()),
                     );
                   },
+                  color: const Color.fromARGB(255, 70, 244, 54),
+                ),
+                // Update button
+                HomeButton(
+                  icon: Icons.data_exploration_outlined,
+                  label: 'Product Data',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProdukPage()),
+                    );
+                  },
+                  color: const Color.fromARGB(255, 195, 206, 0),
                 ),
                 // Logout button
                 HomeButton(
@@ -92,6 +107,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
+                  color: const Color.fromARGB(255, 0, 0, 0),
                 ),
               ],
             ),
@@ -124,11 +140,13 @@ class HomeButton extends StatelessWidget {
   final IconData icon;
   final String label;
   final Function() onTap;
+  final Color color;
 
   const HomeButton({
     required this.icon,
     required this.label,
     required this.onTap,
+    this.color = Colors.blue,
   });
 
   @override
@@ -145,7 +163,7 @@ class HomeButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 50),
+            Icon(icon, color: color, size: 50),
             SizedBox(height: 10),
             Text(label, style: TextStyle(fontSize: 18)),
           ],

@@ -31,47 +31,94 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Sale'),
-        backgroundColor: Color.fromARGB(255, 136, 1, 255),
+        title: const Text('Tambah Penjualan Baru'),
+        backgroundColor: const Color(0xFF8801FF),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: fakturController,
-              decoration: InputDecoration(labelText: 'No Faktur Penjualan'),
-            ),
-            TextField(
-              controller: tanggalController,
-              decoration: InputDecoration(labelText: 'Tanggal Penjualan'),
-            ),
-            TextField(
-              controller: customerController,
-              decoration: InputDecoration(labelText: 'Nama Customer'),
-            ),
-            TextField(
-              controller: jumlahController,
-              decoration: InputDecoration(labelText: 'Jumlah Barang'),
-            ),
-            TextField(
-              controller: totalController,
-              decoration: InputDecoration(labelText: 'Total Penjualan'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: addSale, // Call the addSale function
-              child: Text('Submit'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Kembali'),
-            ),
-          ],
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextField(
+                  fakturController, 'No Faktur Penjualan', Icons.receipt),
+              const SizedBox(height: 16),
+              _buildTextField(
+                  tanggalController, 'Tanggal Penjualan', Icons.calendar_today),
+              const SizedBox(height: 16),
+              _buildTextField(
+                  customerController, 'Nama Customer', Icons.person),
+              const SizedBox(height: 16),
+              _buildTextField(jumlahController, 'Jumlah Barang',
+                  Icons.production_quantity_limits),
+              const SizedBox(height: 16),
+              _buildTextField(
+                  totalController, 'Total Penjualan', Icons.attach_money),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: addSale, // Call the addSale function
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        backgroundColor: const Color(0xFF8801FF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        backgroundColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Kembali',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  // Helper widget for text fields
+  Widget _buildTextField(
+      TextEditingController controller, String label, IconData icon) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        prefixIcon: Icon(icon),
+      ),
+      keyboardType: label == 'Jumlah Barang' || label == 'Total Penjualan'
+          ? TextInputType.number
+          : TextInputType.text,
     );
   }
 }
